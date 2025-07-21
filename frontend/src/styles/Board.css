@@ -1,0 +1,46 @@
+  .app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 700px;
+    margin: 2rem auto;
+    font-family: sans-serif;
+  }
+  
+  .board-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 40px);
+    gap: 10px;
+    margin: 16px 0;
+  }
+  
+  .cell {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 24px;
+    text-transform: uppercase;
+    color: #222;
+    border: 2px solid #888;
+    border-radius: 100%;
+    transition: background 0.2s;
+    background: #fff;
+    box-shadow: none;
+  }
+  
+  .cell:read-only {
+    cursor: default;
+  }
+  
+  .cell-blue {
+    background: #2196F3;
+    color: #fff;
+    box-shadow: 0 0 6px 2px #2196f344;
+  }
+  
+  .cell-yellow {
+    background: #FFD600;
+    color: #222;
+    box-shadow: 0 0 6px 2px #FFD60044;
+  }
