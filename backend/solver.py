@@ -28,9 +28,10 @@ class Solver:
     """
     Solver for the NYT Strands puzzle using Dancing Links and Trie.
     """
-    def __init__(self, grid: Grid, trie: TrieNode, forbidden: Optional[Set[str]] = None):
+    def __init__(self, grid: Grid, trie: TrieNode, forbidden: Optional[Set[str]] = None, findAllSolutions: bool = False):
         self.grid = grid
         self.trie = trie
+        self.findAllSolutions = findAllSolutions
         self.forbidden = set(w.upper() for w in forbidden) if forbidden else set()
         self.m = len(grid)
         self.n = len(grid[0]) if self.m > 0 else 0
@@ -88,7 +89,7 @@ class Solver:
         dlx = DancingLinks()
         dlx.create(R, C1, C2, mat)
         all_solutions: List[List[int]] = []
-        dlx.solve(all_solutions, [], True, wordcount)
+        dlx.solve(all_solutions, [], self.findAllSolutions, wordcount)
         results = []
         for sol in all_solutions:
             solution_word_paths = [word_paths[i] for i in sol]

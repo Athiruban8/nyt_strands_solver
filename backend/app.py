@@ -28,10 +28,11 @@ def solve():
     data = request.get_json()
     grid = data.get('grid')
     wordcount = data.get('wordcount', -1)
+    findAllSolutions = data.get('findAllSolutions', False)
     forbidden = set(w.upper() for w in data.get('forbidden', []))
     if not grid:
         return jsonify({'error': 'Missing grid'}), 400
-    solver = Solver(grid, TRIE, forbidden)
+    solver = Solver(grid, TRIE, forbidden, findAllSolutions)
     results = solver.solve(wordcount)
     return jsonify({'solutions': results})
 
