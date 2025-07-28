@@ -3,8 +3,10 @@ from build_trie import build_trie
 from solver import Solver
 import pickle
 import os
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 TRIE_PATH = 'trie.pkl'
 WORDLIST_PATH = 'english3.txt'
