@@ -3,6 +3,7 @@ import axios from 'axios';
 import Board from './components/Board';
 import './styles/App.css';
 
+const API_URL = import.meta.env.VITE_API_URL || '';
 const COLS = 6;
 const ROWS = 8;
 
@@ -10,12 +11,13 @@ const App: React.FC = () => {
   const [board, setBoard] = useState<string[][]>(
     Array.from({ length: ROWS }, () => Array(COLS).fill(''))
   );
-  const [wordCount, setWordCount] = useState<number>(7);
+  const [wordCount, setWordCount] = useState<number>(-1);
   const [forbidden, setForbidden] = useState<string>('');
   const [findAllSolutions, setFindAllSolutions] = useState<boolean>(false);
   const [solutions, setSolutions] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState(false);
 
   const inputRefs = useRef<(HTMLInputElement | null)[][]>(
     Array.from({ length: ROWS }, () => Array(COLS).fill(null))
@@ -64,14 +66,13 @@ const App: React.FC = () => {
         }
       }
     }
-    
+    setSubmitted(true);
     setLoading(true);
     setError(null);
     setSolutions([]);
-    
     try {
       const grid = board.map(row => row.join(''));
-      const response = await axios.post('/solve', {
+      const response = await axios.post(`${API_URL}/solve`, {
         grid,
         wordcount: wordCount,
         forbidden: forbidden.split(/\s+/).filter(Boolean),
@@ -242,7 +243,7 @@ const App: React.FC = () => {
           </section>
         )}
 
-        {!loading && !error && solutions.length === 0 && (
+        {submitted && !loading && !error && solutions.length === 0 && (
           <div className="error-message" role="status">
             No solutions found.
           </div>
